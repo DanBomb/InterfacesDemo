@@ -4,25 +4,48 @@ namespace InterfacesDemo
 {
     class Program
     {
+
+        private static Random rnd = new Random ();
+        private static int orcLvl = rnd.Next (1, 60);
+        private static int elfLvl = rnd.Next (10, 50);
+
         static void Main(string[] args)
         {
-            Console.WriteLine("Testing Cars");
-            Car zCar = new Car("Datsun", "280Z", "1978");
-            Car vette = new Car("Chevrolet", "Corvette", "2019");
-            Car zCar2 = new Car("Datsun", "280Z", "1978");
-
-            Console.WriteLine($"{zCar.ToString()} is not equal to a {vette.ToString()}: " + zCar.Equals(vette));
-            Console.WriteLine($"{zCar.ToString()} is equal to a {zCar2.ToString()}: " + zCar.Equals(zCar2));
-
-            Console.WriteLine("\n");
-
+            
             Console.WriteLine("Testing Monsters");
-            Monster sully = new Monster("Sully", 17);
-            Monster mike = new Monster("Mike Wizowski", 15);
-            Monster randall = new Monster("Randall", 17);
+            Elf Nareth = new Elf ("Nareth", elfLvl, 28);
+            Orc Brothnagar = new Orc ("Broth'nagar", orcLvl, 8);
 
-            Console.WriteLine($"{sully} is not equal to {mike}: " + sully.Equals(mike));
-            Console.WriteLine($"{sully} is equal to {randall}: " + sully.Equals(randall));
+            Console.WriteLine ("Elf " + Nareth.Name + " starting level: " + Nareth.Level);
+            Console.WriteLine ("Orc " + Brothnagar.Name + " starting level: " + Brothnagar.Level);
+            Console.WriteLine ();
+            Console.WriteLine ("Elf " + Nareth.Name + " starting health: " + Nareth.Health);
+            Console.WriteLine ("Orc " + Brothnagar.Name + " starting health: " + Brothnagar.Health);
+            Console.WriteLine ();
+
+            while (Nareth.Health >= 0 && Brothnagar.Health >= 0) {
+
+                if (Nareth.Health > 0) {    
+                    Brothnagar.TakeDamage (Nareth.Attack (Brothnagar.Armor));
+                
+                    Console.WriteLine ("Nareth attacked Broth'Nagar for " + Nareth.Damage + " damage.");
+                    Console.WriteLine ("Broth'nagar's health: " + Brothnagar.Health + ", Nareth's health: " + Nareth.Health);
+                    Console.WriteLine ();
+                }
+                if (Brothnagar.Health > 0) {
+                    Nareth.TakeDamage (Brothnagar.Attack (Nareth.Armor));
+
+                    Console.WriteLine ("Broth'Nagar attacked Nareth for " + Brothnagar.Damage + " damage.");
+                    Console.WriteLine ("Broth'nagar's health: " + Brothnagar.Health + ", Nareth's health: " + Nareth.Health);
+                    Console.WriteLine ();
+                }
+            }
+
+            if (Nareth.Health <= 0) {
+                Console.WriteLine ("Brothnagar won!");
+            } else if (Brothnagar.Health <= 0) {
+                Console.WriteLine ("Nareth won!");
+            }
         }
     }
 }

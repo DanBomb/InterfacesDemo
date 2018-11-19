@@ -1,5 +1,8 @@
 namespace InterfacesDemo {
-    interface IEquatable<T> {
-        bool Equals (T obj);
+
+    interface IAttacker {
+        int Attack (int armor);
+        
+        void TakeDamage (int damage);
     }
 }
